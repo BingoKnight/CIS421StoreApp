@@ -7,6 +7,8 @@ from .models import User
 
 class UserAPIView(generics.GenericAPIView):
 
+    serializer_class = UserSerializer
+
     @staticmethod
     def convert_to_dict(users_list):
         new_list = []
@@ -33,6 +35,9 @@ class AddUserAPIView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         print('request NAME: ', request.data['name'])
+
+        # serializer = self.get_serializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
 
         with connection.cursor() as cursor:
             cursor.execute('INSERT INTO users_user (name, email, password) VALUES (%s, %s, %s)',
