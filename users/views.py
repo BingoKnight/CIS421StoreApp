@@ -26,8 +26,11 @@ class UserAPIView(generics.GenericAPIView):
         cursor.execute('SELECT * FROM users_user')
         users = cursor.fetchall()
         print(users)
-        usersList = self.convert_to_dict(users)
-        return Response(usersList)
+        users_list = self.convert_to_dict(users)
+        return Response(users_list)
+
+    def get_queryset(self):
+        pass
 
 
 class AddUserAPIView(generics.GenericAPIView):
@@ -55,3 +58,6 @@ class AddUserAPIView(generics.GenericAPIView):
         }
 
         return Response(response)
+
+    def get_queryset(self):
+        pass
