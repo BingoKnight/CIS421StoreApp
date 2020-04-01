@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import Form from './Form';
-import Leads from './Products';
+import Products from './Products';
 
 export default function ProductDashboard() {
     return (
         <Fragment>
-
+            <Form/>
+            <Products/>
         </Fragment>
     )
 }
