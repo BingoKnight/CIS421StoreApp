@@ -60,7 +60,7 @@ export class Form extends Component {
               </div>
               <div className="form-group">
                 <label>Category</label>
-                <textarea
+                <input
                   className="form-control"
                   type="text"
                   name="category"
@@ -70,7 +70,7 @@ export class Form extends Component {
               </div>
               <div className="form-group">
                 <label>Price</label>
-                <textarea
+                <input
                   className="form-control"
                   type="text"
                   name="price"
@@ -80,7 +80,7 @@ export class Form extends Component {
               </div>
               <div className="form-group">
                 <label>Quantity</label>
-                <textarea
+                <input
                   className="form-control"
                   type="text"
                   name="quantity"

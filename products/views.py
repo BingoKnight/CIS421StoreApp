@@ -127,7 +127,13 @@ class ProductAPIView(generics.GenericAPIView):
         query = self.product_insert_query_builder(validated_dict)
         cursor = connection.cursor()
         cursor.execute(query)
-        return Response({'details': 'success'})
+
+        product_dict = get_validated_dict(request.data.copy(), False)
+        query = product_select_query_builder(product_dict)
+        cursor.execute(query)
+        result = convert_to_dict(cursor.fetchall())
+        print(result)
+        return Response(result)
 
     def get(self, *args, **kwargs):
         cursor = connection.cursor()
@@ -153,9 +159,9 @@ class ProductAPIView(generics.GenericAPIView):
 
         return Response(convert_to_dict(result))
 
-    def delete(self, request):
+    def delete(self, *args, **kwargs):
         cursor = connection.cursor()
-        cursor.execute('DELETE FROM products_product WHERE id=' + str(request.data['id']) + ';')
+        cursor.execute('DELETE FROM products_product WHERE id=' + str(kwargs['id']) + ';')
         return Response({'details': 'product succesfully deleted'})
 
     def get_queryset(self):

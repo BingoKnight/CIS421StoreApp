@@ -35,7 +35,7 @@ export const deleteProduct = id => dispatch => {
       .then(res => {
         dispatch({
           type: ADD_PRODUCT,
-          payload: res.data
+          payload: res.data[0]
         });
       })
       .catch(err => console.log(err));

@@ -4,10 +4,10 @@ import Products from './Products';
 
 export default function ProductDashboard() {
     return (
-        <Fragment>
+        <div className={'container'}>
             <Form/>
             <Products/>
-        </Fragment>
+        </div>
     )
 }
 

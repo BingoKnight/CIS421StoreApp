@@ -30,7 +30,7 @@ export class Products extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        { this.props.products.map(product => (
+                        { this.props.products.products.map(product => (
                             <tr key= {product.id}>
                                 <td>{product.name}</td>
                                 <td>{product.description}</td>
@@ -39,10 +39,9 @@ export class Products extends Component {
                                 <td>{product.quantity}</td>
                                 <td>
                                     <button onClick={this.props.deleteProduct.bind
-                                    (this, product.id)} 
+                                    (this, product.id)}
                                     className="btn btn-danger btn-sm"
                                     >
-                                        {" "}
                                     Delete
                                     </button>
                                 </td>
@@ -56,7 +55,7 @@ export class Products extends Component {
 }
 
 const mapStateToProps = state => ({
-    products: state.products.products
+    products: state.products
 });
 
 export default connect(mapStateToProps,
