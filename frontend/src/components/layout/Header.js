@@ -64,7 +64,7 @@ const Header = props => {
     const isLoggedIn = props.users.isLoggedIn;
 
     if(Cookies.get('user_id')){
-        axios.get('http://localhost:8000/api/user/' + Cookies.get('user_id') + '/')
+        axios.get('http://localhost:8000/api/user/login/' + Cookies.get('user_id') + '/')
             .then(res => {
                 userName = res.data['user']
             }, err => {

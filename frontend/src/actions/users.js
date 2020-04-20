@@ -17,3 +17,8 @@ export const setUsers = () => dispatch => {
             })
         })
 };
+
+export const setUserList = payload => ({
+    type: GET_USERS,
+    payload
+})

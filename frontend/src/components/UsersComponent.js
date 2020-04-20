@@ -1,11 +1,36 @@
 import React, { useState } from 'react';
 import {connect, useDispatch} from 'react-redux';
 import $ from 'jquery';
-import { setUsers } from "../actions/users";
+import { setUsers, setUserList } from "../actions/users";
+import axios from "axios";
+import {setProductList} from "../actions/products";
 
+
+const buildSearchObj = () => {
+    let searchObj = {};
+
+    if($('#name-search').val() && $('#name-search').val().trim() != ''){
+        searchObj.name = $('#name-search').val().trim();
+    }
+    if($('#id-search').val() && $('#id-search').val().trim() != ''){
+        searchObj.id = $('#id-search').val().trim();
+    }
+    if($('#email-search').val() && $('#email-search').val().trim() != ''){
+        searchObj.email = $('#email-search').val().trim();
+    }
+
+    return searchObj
+};
 
 const searchUsers = dispatch => {
-//    build out search like products
+    const searchRequest = buildSearchObj()
+
+    if(Object.keys(searchRequest).length !== 0){
+        axios.post('http://localhost:8000/api/user/', searchRequest)
+            .then(res => {
+                dispatch(setUserList(res.data));
+            })
+    }
 }
 
 const UsersComponent = (props) => {
