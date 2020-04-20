@@ -132,7 +132,7 @@ export const Products = (props) => {
                             <td>{product.price}</td>
                             <td>{product.quantity}</td>
                             <td>
-                                <button onClick={() => dispatch(deleteProduct)} className="btn btn-danger btn-sm">
+                                <button onClick={() => dispatch(deleteProduct(product.id))} className="btn btn-danger btn-sm">
                                     Delete
                                 </button>
                             </td>

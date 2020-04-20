@@ -62,6 +62,7 @@ class UserAPIView(generics.GenericAPIView):
 
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM users_user')
+        print('SELECT * FROM users_user')
         users = cursor.fetchall()
         print(users)
         users_list = []

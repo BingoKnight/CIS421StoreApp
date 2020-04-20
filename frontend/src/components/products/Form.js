@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
-import { addProduct } from "../../actions/products";
+import { addProduct, getProducts } from "../../actions/products";
 
 export class Form extends Component {
     state = {
@@ -23,6 +23,7 @@ export class Form extends Component {
         const { name, description, category, price, quantity } = this.state;
         const product = { name, description, category, price, quantity };
         this.props.addProduct(product);
+        this.props.getProducts();
         this.setState({
             name: "",
             description: "",
@@ -99,4 +100,4 @@ export class Form extends Component {
       }
 }
 
-export default connect(null, { addProduct })(Form);
+export default connect(null, { addProduct, getProducts })(Form);
