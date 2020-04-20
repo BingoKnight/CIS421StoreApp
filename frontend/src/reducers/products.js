@@ -1,5 +1,6 @@
 //reducer is a function that takes in an action and evaluates the action then sends down a state based on the action evaluation
 import { GET_PRODUCTS, DELETE_PRODUCT, ADD_PRODUCT } from '../actions/types.js';
+import {UPDATE_PRODUCTS} from "../actions/types";
 
 const initialState = {
     products: []
@@ -21,6 +22,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 products: [...state.products, action.payload]
+            };
+        case UPDATE_PRODUCTS:
+            return {
+                ...state,
+                products: [...action.payload]
             };
         default:
             return state;

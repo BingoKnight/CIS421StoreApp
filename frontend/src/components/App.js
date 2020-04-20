@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Header from './layout/Header'
 import ProductDashboard from './products/ProductDashboard';
 import RegisterComponent from "./RegisterComponent";
+import UsersComponent from "./UsersComponent";
 
 import { Provider } from 'react-redux';
 import store from '../store';
@@ -17,6 +18,7 @@ class App extends Component{
                     <Router>
                         <Header/>
                         <Route path={'/register'} component={RegisterComponent} />
+                        <Route path={'/users'} component={UsersComponent} />
                         <Route exact path={'/'} component={ProductDashboard} />
                     </Router>
                 </Fragment>

@@ -30,7 +30,6 @@ def product_select_query_builder(validated_dict):
                 query += ' AND ' + key + '="' + value.lower().strip() + '"'
 
     query += ';'
-    print(query)
 
     return query
 
@@ -130,6 +129,7 @@ class ProductAPIView(generics.GenericAPIView):
 
         product_dict = get_validated_dict(request.data.copy(), False)
         query = product_select_query_builder(product_dict)
+        print('product post query: ', query)
         cursor.execute(query)
         result = convert_to_dict(cursor.fetchall())
         print(result)
@@ -138,6 +138,7 @@ class ProductAPIView(generics.GenericAPIView):
     def get(self, *args, **kwargs):
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM products_product')
+        print('product get query: SELECT * FROM products_product')
         products_list = cursor.fetchall()
 
         products_list = convert_to_dict(products_list)
@@ -151,6 +152,7 @@ class ProductAPIView(generics.GenericAPIView):
             return Response({'details': format(error)}, status=status.HTTP_400_BAD_REQUEST)
 
         query = self.product_update_query_builder(validated_dict)
+        print('product put query: ', query)
         cursor.execute(query)
 
         updated_product = product_select_query_builder(validated_dict)
@@ -161,7 +163,9 @@ class ProductAPIView(generics.GenericAPIView):
 
     def delete(self, *args, **kwargs):
         cursor = connection.cursor()
-        cursor.execute('DELETE FROM products_product WHERE id=' + str(kwargs['id']) + ';')
+        query = 'DELETE FROM products_product WHERE id=' + str(kwargs['id']) + ';'
+        cursor.execute(query)
+        print('product delete query: ', query)
         return Response({'details': 'product succesfully deleted'})
 
     def get_queryset(self):
@@ -179,11 +183,10 @@ class ProductSearchAPIView(generics.GenericAPIView):
         except ValueError as error:
             return Response({'details': format(error)}, status=status.HTTP_400_BAD_REQUEST)
 
-        print(search_query)
         cursor = connection.cursor()
 
         query = product_select_query_builder(search_query)
-        print(query)
+        print('product search post query: ', query)
         cursor.execute(query)
         result = convert_to_dict(cursor.fetchall())
 

@@ -1,8 +1,9 @@
-import {IS_LOGGED_IN} from "../actions/types";
+import {GET_USERS, IS_LOGGED_IN} from "../actions/types";
 
 
 const initialState = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    usersList: []
 };
 
 export default function(state = initialState, action) {
@@ -11,6 +12,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 isLoggedIn: action.payload
+            };
+        case GET_USERS:
+            return {
+                ...state,
+                usersList: [...action.payload]
             };
         default:
             return state;
