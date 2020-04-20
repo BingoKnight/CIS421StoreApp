@@ -4,5 +4,6 @@ from .views import UserAPIView, AddUserAPIView, LoginUserAPIView
 urlpatterns = [
     path('', UserAPIView.as_view()),
     path('addUser/', AddUserAPIView.as_view()),
-    path('login/', LoginUserAPIView.as_view())
+    path('login/', LoginUserAPIView.as_view()),
+    path('login/<int:id>/', LoginUserAPIView.as_view())
 ]

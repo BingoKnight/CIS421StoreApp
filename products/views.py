@@ -19,15 +19,15 @@ def product_select_query_builder(validated_dict):
     for key, value in validated_dict.items():
         if first_itr and key != 'csrfmiddlewaretoken':
             if isinstance(value, int):
-                query += key + '="' + str(value) + '"'
+                query += key + ' LIKE "%' + str(value) + '%"'
             else:
-                query += key + '="' + value.lower().strip() + '"'
+                query += key + ' LIKE "%' + value.lower().strip() + '%"'
             first_itr = False
         elif key != 'csrfmiddlewaretoken':
             if isinstance(value, int):
-                query += ' AND ' + key + '="' + str(value) + '"'
+                query += ' AND ' + key + ' LIKE "%' + str(value) + '%"'
             else:
-                query += ' AND ' + key + '="' + value.lower().strip() + '"'
+                query += ' AND ' + key + ' LIKE "%' + value.lower().strip() + '%"'
 
     query += ';'
 
@@ -131,9 +131,13 @@ class ProductAPIView(generics.GenericAPIView):
         query = product_select_query_builder(product_dict)
         print('product post query: ', query)
         cursor.execute(query)
-        result = convert_to_dict(cursor.fetchall())
-        print(result)
-        return Response(result)
+
+        product_list = []
+        result_products = cursor.fetchall()
+        for product in result_products:
+            product_list.append(convert_to_dict(product))
+
+        return Response(product_list)
 
     def get(self, *args, **kwargs):
         cursor = connection.cursor()
