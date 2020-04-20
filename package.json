@@ -1,0 +1,43 @@
+{
+  "name": "cis421storeapp",
+  "version": "1.0.0",
+  "description": "You must download and install python 3.8 to use this application, to do so go to the link below.\r https://www.python.org/downloads/release/python-382/\r <br>\r ## Installation\r Navigate into the project\r `cd CIS421StoreApp/` \\\r Optional: its normally best practice to enter the virtual environment and develop from there \\\r `venv/Scripts/activate` \\\r <br>\r Install the requirements \\\r `pip install -r requirements.txt` \r <br>\r ## Run\r `python manage.py runserver`",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch ./frontend/src/index.js --output ./frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./frontend/src/index.js --output ./frontend/static/frontend/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BingoKnight/CIS421StoreApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BingoKnight/CIS421StoreApp/issues"
+  },
+  "homepage": "https://github.com/BingoKnight/CIS421StoreApp#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "jquery": "^3.5.0",
+    "js-cookie": "^2.2.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
+  }
+}

@@ -1,35 +1,34 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
 from django.db import connection
 from .serializer import UserSerializer
-from .models import User
+from django.http import JsonResponse
+
+
+def convert_to_dict(user):
+    user_dict = {
+        'id': user[0],
+        'name': user[1],
+        'email': user[2],
+    }
+    return user_dict
 
 
 class UserAPIView(generics.GenericAPIView):
 
     serializer_class = UserSerializer
 
-    @staticmethod
-    def convert_to_dict(users_list):
-        new_list = []
-        for user in users_list:
-            new_list.append({
-                'id': user[0],
-                'name': user[1],
-                'email': user[2],
-            })
-        print(new_list)
-        return new_list
-
     def get(self, *args, **kwargs):
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM users_user')
         users = cursor.fetchall()
-        print(users)
-        users_list = self.convert_to_dict(users)
+        users_list = []
+        for user in users:
+            users_list.append(convert_to_dict(user))
         return Response(users_list)
 
-    def get_queryset(self):
+    def post(self, request, *args, **kwargs):
+        # copy search from products
         pass
 
 
@@ -43,11 +42,16 @@ class AddUserAPIView(generics.GenericAPIView):
         # serializer.is_valid(raise_exception=True)
 
         with connection.cursor() as cursor:
-            cursor.execute('INSERT INTO users_user (name, email, password) VALUES (%s, %s, %s)',
-                           (request.data['name'], request.data['email'], request.data['password']))
+            print('request ', request.data)
+            query = 'INSERT INTO users_user (name, email, password) VALUES ("' + request.data['name'] \
+                    + '", "' + request.data['email'] + '", "' + request.data['password'] + '")'
+            cursor.execute(query)
+            print('add user post insert query: ', query)
 
-            cursor.execute('SELECT * FROM users_user WHERE name = %s AND email = %s AND password = %s',
-                           (request.data['name'], request.data['email'], request.data['password']))
+            query = 'SELECT * FROM users_user WHERE name = "' + request.data['name'] + '" AND email = "' \
+                    + request.data['email'] + '" AND password = "' + request.data['password'] + '"'
+            cursor.execute(query)
+            print('add user post select query: ', query)
 
             data = list(cursor.fetchall()[0])
 
@@ -61,3 +65,20 @@ class AddUserAPIView(generics.GenericAPIView):
 
     def get_queryset(self):
         pass
+
+
+class LoginUserAPIView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        cursor = connection.cursor()
+        query = 'SELECT * FROM users_user WHERE email="' + request.data['email'] + \
+                '" AND password="' + request.data['password'] + '"'
+        cursor.execute(query)
+        print('login user post query: ', query)
+        user = cursor.fetchall()
+        user = convert_to_dict(user)
+        if len(user) > 0:
+            return JsonResponse(user, safe=False)
+
+        return Response({'details': 'invalid email or password'}, safe=False, status=status.HTTP_400_BAD_REQUEST)
