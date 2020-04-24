@@ -37,6 +37,7 @@ def product_select_query_builder(validated_dict):
 def convert_to_dict(products_list):
     new_list = []
     for product in products_list:
+        print("fdsafdsafDSAfdsa",product)
         new_list.append({
             'id': product[0],
             'name': product[1],
@@ -128,14 +129,14 @@ class ProductAPIView(generics.GenericAPIView):
         cursor.execute(query)
 
         product_dict = get_validated_dict(request.data.copy(), False)
-        query = product_select_query_builder(product_dict)
+        query = 'SELECT * FROM products_product'
         print('product post query: ', query)
         cursor.execute(query)
 
         product_list = []
         result_products = cursor.fetchall()
-        for product in result_products:
-            product_list.append(convert_to_dict(product))
+        print('result_products: **', result_products)
+        product_list.append(convert_to_dict(result_products))
 
         return Response(product_list)
 
@@ -144,6 +145,7 @@ class ProductAPIView(generics.GenericAPIView):
         cursor.execute('SELECT * FROM products_product')
         print('product get query: SELECT * FROM products_product')
         products_list = cursor.fetchall()
+        print('products list in get: ', products_list)
 
         products_list = convert_to_dict(products_list)
         return Response(products_list)
