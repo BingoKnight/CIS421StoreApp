@@ -8,7 +8,7 @@ https://nodejs.org/en/
 <br>
 ## Installation
 Navigate into the project \
-`cd CIS421StoreApp/` \
+`cd CIS421StoreApp/`
 
 Optional: its normally best practice to enter the virtual environment and develop from there \
 `virtualenv venv && venv/Scripts/activate` 
